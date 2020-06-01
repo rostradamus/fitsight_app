@@ -1,20 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wolog_app/blocs/auth/auth_bloc.dart';
+import 'package:wolog_app/login_form.dart';
+import 'package:wolog_app/service_locator.dart';
 
-void main() => runApp(
-  MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: HomePage(),
-  )
-);
+void main() {
+  setupLocators();
+  runApp(
+    MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: HomePage(),
+    )
+  );
+}
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
+      appBar: false ? AppBar(
         title: Text('Flutter layout demo'),
-      ),
+      ) : null,
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -24,12 +31,13 @@ class HomePage extends StatelessWidget {
         ),
         child: Stack(
           children: <Widget>[
-            Positioned(
-              child: Container(
-                margin: EdgeInsets.only(bottom: 50),
-                child: Center(
+            Padding(
+              padding: EdgeInsets.all(100.0),
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: Container(
                   child: Text(
-                    "WOLOG",
+                    "TITLE",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 40,
@@ -37,37 +45,14 @@ class HomePage extends StatelessWidget {
                       fontStyle: FontStyle.italic
                     )
                   )
-                )
-              ),
+                ),
+              )
             ),
             Padding(
               padding: EdgeInsets.all(30.0),
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10)
-                    ),
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.all(8.0),
-                          decoration: BoxDecoration(
-                            border: Border(bottom: BorderSide(color: Colors.grey[100]))
-                          ),
-                          child: TextField(
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: "Email address"
-                            ),
-                          )
-                        )
-                      ],
-                    )
-                  )
-                ],
+              child: BlocProvider(
+                create: (context) => AuthBloc(),
+                child: LoginForm()
               )
             )
           ],
