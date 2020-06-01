@@ -8,7 +8,7 @@ import 'package:wolog_app/models/user.dart';
 import 'package:wolog_app/services/api_service.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final ApiService apiService = GetIt.I.get<ApiService>();
+  final ApiService _apiService = GetIt.I.get<ApiService>();
 
   @override
   AuthState get initialState => AuthInitialState();
@@ -19,7 +19,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     if (event is LoginSubmittedEvent) {
       yield AuthRequestState();
       try {
-        User user = await apiService.login(event.email, event.password);
+        User user = await _apiService.login(event.email, event.password);
         yield LoginSuccessState(user: user);
       } on DioError catch (e) {
         yield LoginFailureState(message: e.message);
@@ -28,7 +28,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     } else if (event is LogoutSubmittedEvent) {
       yield AuthRequestState();
       try {
-        await apiService.logout();
+        await _apiService.logout();
         yield LogoutSuccessState();
       } on DioError catch (e) {
         yield LogoutFailureState(message: e.message);

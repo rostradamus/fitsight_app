@@ -8,8 +8,4 @@ class User {
   UnmodifiableListView<String> get roles => UnmodifiableListView(_roles);
 
   User(this._email, this._roles);
-
-  void addRole(String role) {
-    roles.add(role);
-  }
 }
