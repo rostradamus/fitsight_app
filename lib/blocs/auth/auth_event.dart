@@ -7,12 +7,10 @@ class LoginSubmittedEvent extends AuthEvent {
   final String email, password;
   LoginSubmittedEvent({@required this.email, @required this.password});
   @override
-  // TODO: implement props
   List<Object> get props => null;
 }
 
 class LogoutSubmittedEvent extends AuthEvent {
   @override
-  // TODO: implement props
   List<Object> get props => null;
 }

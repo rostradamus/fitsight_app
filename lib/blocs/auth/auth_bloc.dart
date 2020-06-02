@@ -8,14 +8,14 @@ import 'package:wolog_app/models/user.dart';
 import 'package:wolog_app/services/api_service.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final ApiService _apiService = GetIt.I.get<ApiService>();
+
 
   @override
   AuthState get initialState => AuthInitialState();
 
   @override
   Stream<AuthState> mapEventToState(AuthEvent event) async* {
-
+    final ApiService _apiService = GetIt.I.get<ApiService>();
     if (event is LoginSubmittedEvent) {
       yield AuthRequestState();
       try {

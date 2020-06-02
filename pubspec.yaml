@@ -28,7 +28,9 @@ dependencies:
   dio: ^3.0.9
   flutter_bloc: ^4.0.0
   equatable: ^1.2.0
-  # meta: ^1.1.8
+  dio_cookie_manager: ^1.0.0
+  cookie_jar: ^1.0.0
+  path_provider: ^1.6.9
 
 dev_dependencies:
   flutter_test:

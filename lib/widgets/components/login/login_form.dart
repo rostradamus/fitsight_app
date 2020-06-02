@@ -15,7 +15,6 @@ class LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AuthBloc authBloc = BlocProvider.of<AuthBloc>(context);
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is LoginSuccessState) {
@@ -92,7 +91,7 @@ class LoginForm extends StatelessWidget {
               height: 50.0,
               child: RaisedButton(
                 onPressed: () async {
-                  authBloc.add(LoginSubmittedEvent(email: _emailController.text, password: _passwordController.text));
+                  BlocProvider.of<AuthBloc>(context).add(LoginSubmittedEvent(email: _emailController.text, password: _passwordController.text));
                   // Navigator.pushNamed(context, '/');
                 },
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),

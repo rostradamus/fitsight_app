@@ -8,7 +8,6 @@ import 'package:wolog_app/blocs/auth/auth_state.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final AuthBloc authBloc = BlocProvider.of<AuthBloc>(context);
     return Scaffold(
       appBar: AppBar(
         title: BlocBuilder<AuthBloc, AuthState>(
@@ -71,7 +70,7 @@ class HomePage extends StatelessWidget {
                     height: 50,
                     child: RaisedButton(
                       onPressed: () async {
-                        authBloc.add(LogoutSubmittedEvent());
+                        BlocProvider.of<AuthBloc>(context).add(LogoutSubmittedEvent());
                         // Navigator.pushNamed(context, '/login');
                       },
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
