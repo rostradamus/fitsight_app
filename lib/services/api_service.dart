@@ -21,7 +21,6 @@ class ApiService {
   }
 
   Future<void> init() async {
-    await Future.delayed(Duration(seconds: 5));
     Directory appDocDir = await getApplicationDocumentsDirectory();
     _cookieJar = PersistCookieJar(dir: appDocDir.path + "/.cookies/");
     _client.interceptors.add(CookieManager(_cookieJar));
