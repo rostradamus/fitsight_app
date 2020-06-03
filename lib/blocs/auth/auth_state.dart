@@ -23,9 +23,10 @@ class LoginSuccessState extends AuthState {
 }
 
 class LoginFailureState extends AuthState {
+  final int statusCode;
   final String message;
 
-  LoginFailureState({@required this.message});
+  LoginFailureState({@required this.statusCode, @required this.message});
   @override
   List<Object> get props => null;
 }
@@ -36,9 +37,10 @@ class LogoutSuccessState extends AuthState {
 }
 
 class LogoutFailureState extends AuthState {
+  final int statusCode;
   final String message;
 
-  LogoutFailureState({@required this.message});
+  LogoutFailureState({@required this.statusCode, @required this.message});
   @override
   List<Object> get props => null;
 }

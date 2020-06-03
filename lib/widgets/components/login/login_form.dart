@@ -19,6 +19,21 @@ class LoginForm extends StatelessWidget {
       listener: (context, state) {
         if (state is LoginSuccessState) {
           Navigator.of(context).pushNamed('/');
+        } else if (state is LoginFailureState) {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text("Unauthroized"),
+                  content: Text("Incorrect Email or Password."),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text("Close"),
+                      onPressed: () => Navigator.of(context).pop(),
+                    )
+                  ],
+                );
+              });
         }
       },
       child: Form(
@@ -81,7 +96,8 @@ class LoginForm extends StatelessWidget {
                 BlocProvider.of<AuthBloc>(context).add(LoginSubmittedEvent(
                     email: _emailController.text,
                     password: _passwordController.text));
-                // Navigator.pushNamed(context, '/');
+                _emailController.clear();
+                _passwordController.clear();
               },
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(80.0)),

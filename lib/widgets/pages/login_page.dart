@@ -18,7 +18,7 @@ class LoginPage extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.topCenter,
                   child: Container(
-                      child: Text("TITLE",
+                      child: Text("WOLOG",
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 40,

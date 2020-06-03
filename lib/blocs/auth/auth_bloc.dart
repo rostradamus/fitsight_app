@@ -19,7 +19,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         User user = await _apiService.login(event.email, event.password);
         yield LoginSuccessState(user: user);
       } on DioError catch (e) {
-        yield LoginFailureState(message: e.message);
+        yield LoginFailureState(
+            statusCode: e.response.statusCode, message: e.message);
       }
     } else if (event is LogoutSubmittedEvent) {
       yield AuthRequestState();
