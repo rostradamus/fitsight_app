@@ -15,23 +15,32 @@ class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: GetIt.I.allReady(),
-      builder: (BuildContext context, AsyncSnapshot snapshot){
-        if (snapshot.hasData) {
-          return BlocProvider<AuthBloc>(
-            create: (context) => AuthBloc(),
-            child: MaterialApp(
-              debugShowCheckedModeBanner: false,
-              initialRoute: '/login',
-              routes: {
-                '/': (context) => HomePage(),
-                '/login': (context) => LoginPage()
-              },
-            ),
+        future: GetIt.I.allReady(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            return BlocProvider<AuthBloc>(
+              create: (context) => AuthBloc(),
+              child: MaterialApp(
+                debugShowCheckedModeBanner: false,
+                initialRoute: '/login',
+                routes: {
+                  '/': (context) => HomePage(),
+                  '/login': (context) => LoginPage()
+                },
+              ),
+            );
+          }
+          return Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                    colors: [Colors.blue, Colors.red])),
+            child: Center(
+                child: CircularProgressIndicator(
+              backgroundColor: Colors.white,
+            )),
           );
-        }
-        return CircularProgressIndicator();
-      }
-    );
+        });
   }
 }

@@ -12,15 +12,16 @@ class ApiService {
 
   ApiService() {
     _client.options.baseUrl = "http://localhost:8080/api";
-    _client.options.connectTimeout=5000;
-    _client.options.receiveTimeout=5000;
+    _client.options.connectTimeout = 5000;
+    _client.options.receiveTimeout = 5000;
     _client.options.headers = {
-      'Content-type' : 'application/json',
+      'Content-type': 'application/json',
       'Accept': 'application/json',
     };
   }
 
   Future<void> init() async {
+    await Future.delayed(Duration(seconds: 5));
     Directory appDocDir = await getApplicationDocumentsDirectory();
     _cookieJar = PersistCookieJar(dir: appDocDir.path + "/.cookies/");
     _client.interceptors.add(CookieManager(_cookieJar));
@@ -35,15 +36,14 @@ class ApiService {
   }
 
   Future<User> login(email, password) async {
-    var response = await _client.post('/auth', data: {
-      "email": email,
-      "password": password
-    });
+    var response = await _client
+        .post('/auth', data: {"email": email, "password": password});
 
     Map responseBody = response.data;
     Set<String> roles = List<String>.from(responseBody['roles']).toSet();
 
-    _client.options.headers['authorization'] = "${responseBody['type']} ${responseBody['token']}";
+    _client.options.headers['authorization'] =
+        "${responseBody['type']} ${responseBody['token']}";
     return User(responseBody['email'], roles);
   }
 

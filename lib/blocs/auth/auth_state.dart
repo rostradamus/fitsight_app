@@ -42,4 +42,3 @@ class LogoutFailureState extends AuthState {
   @override
   List<Object> get props => null;
 }
-

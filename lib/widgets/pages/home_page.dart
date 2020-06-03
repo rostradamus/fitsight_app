@@ -4,7 +4,6 @@ import 'package:wolog_app/blocs/auth/auth_bloc.dart';
 import 'package:wolog_app/blocs/auth/auth_event.dart';
 import 'package:wolog_app/blocs/auth/auth_state.dart';
 
-
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -21,9 +20,9 @@ class HomePage extends StatelessWidget {
         ),
       ),
       body: Container(
-        child: Stack(
-          children: <Widget>[
-            Padding(
+          child: Stack(
+        children: <Widget>[
+          Padding(
               padding: EdgeInsets.all(100.0),
               child: Align(
                 alignment: Alignment.topCenter,
@@ -31,24 +30,18 @@ class HomePage extends StatelessWidget {
                   child: BlocConsumer<AuthBloc, AuthState>(
                     builder: (context, state) {
                       if (state is LoginSuccessState)
-                        return Text(
-                          "Hello ${state.user.email}!",
+                        return Text("Hello ${state.user.email}!",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 40,
+                                fontWeight: FontWeight.bold,
+                                fontStyle: FontStyle.italic));
+                      return Text("Hello !",
                           style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 40,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.italic
-                          )
-                        );
-                      return Text(
-                        "Hello !",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 40,
-                          fontWeight: FontWeight.bold,
-                          fontStyle: FontStyle.italic
-                        )
-                      );
+                              color: Colors.black,
+                              fontSize: 40,
+                              fontWeight: FontWeight.bold,
+                              fontStyle: FontStyle.italic));
                     },
                     listener: (context, state) {
                       if (state is LogoutSuccessState) {
@@ -57,9 +50,8 @@ class HomePage extends StatelessWidget {
                     },
                   ),
                 ),
-              )
-            ),
-            Padding(
+              )),
+          Padding(
               padding: EdgeInsets.all(30.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -70,43 +62,41 @@ class HomePage extends StatelessWidget {
                     height: 50,
                     child: RaisedButton(
                       onPressed: () async {
-                        BlocProvider.of<AuthBloc>(context).add(LogoutSubmittedEvent());
+                        BlocProvider.of<AuthBloc>(context)
+                            .add(LogoutSubmittedEvent());
                         // Navigator.pushNamed(context, '/login');
                       },
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(80.0)),
                       padding: EdgeInsets.all(0.0),
                       child: Ink(
                         decoration: BoxDecoration(
                             gradient: LinearGradient(
-                              colors: <Color> [
+                              colors: <Color>[
                                 Color(0xFFDAE2F8),
                                 Color(0xFFD6A4A4)
                               ],
                               begin: Alignment.centerLeft,
                               end: Alignment.centerRight,
                             ),
-                            borderRadius: BorderRadius.circular(30.0)
-                        ),
+                            borderRadius: BorderRadius.circular(30.0)),
                         child: Container(
-                          constraints: BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
+                          constraints:
+                              BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
                           alignment: Alignment.center,
                           child: Text(
                             "Logout",
                             textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Colors.white
-                            ),
+                            style: TextStyle(color: Colors.white),
                           ),
                         ),
                       ),
                     ),
                   )
                 ],
-              )
-            )
-          ],
-        )
-      ),
+              ))
+        ],
+      )),
     );
   }
 }
