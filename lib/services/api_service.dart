@@ -4,14 +4,21 @@ import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:wolog_app/models/user.dart';
+import 'package:wolog_app/models/auth.dart';
+import 'package:wolog_app/services/exceptions/unsupported_os_exception.dart';
 
 class ApiService {
   final Dio _client = new Dio();
   CookieJar _cookieJar;
 
   ApiService() {
-    _client.options.baseUrl = "http://localhost:8080/api";
+    if (Platform.isAndroid)
+      _client.options.baseUrl = "http://10.0.2.2:8080/api";
+    else if (Platform.isIOS)
+      _client.options.baseUrl = "http://localhost:8080/api";
+    else
+      throw new UnsupportedOSException(Platform.operatingSystem);
+
     _client.options.connectTimeout = 5000;
     _client.options.receiveTimeout = 5000;
     _client.options.headers = {
@@ -22,11 +29,15 @@ class ApiService {
 
   Future<void> init() async {
     Directory appDocDir = await getApplicationDocumentsDirectory();
-    _cookieJar = PersistCookieJar(dir: appDocDir.path + "/.cookies/");
-    _client.interceptors.add(CookieManager(_cookieJar));
+    _cookieJar = PersistCookieJar(
+      dir: appDocDir.path + "/.cookies/",
+    );
+    _client.interceptors.add(CookieManager(
+      _cookieJar,
+    ));
   }
 
-  Dio getConnection() {
+  Dio getClient() {
     return this._client;
   }
 
@@ -34,16 +45,17 @@ class ApiService {
     return this._cookieJar;
   }
 
-  Future<User> login(email, password) async {
-    var response = await _client
-        .post('/auth', data: {"email": email, "password": password});
+  Future<Auth> login(email, password) async {
+    var response = await _client.post('/auth', data: {
+      "email": email,
+      "password": password,
+    });
 
     Map responseBody = response.data;
-    Set<String> roles = List<String>.from(responseBody['roles']).toSet();
 
     _client.options.headers['authorization'] =
         "${responseBody['type']} ${responseBody['token']}";
-    return User(responseBody['email'], roles);
+    return Auth.fromJson(responseBody);
   }
 
   Future<void> logout() async {

@@ -4,7 +4,6 @@ import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:wolog_app/blocs/auth/auth_bloc.dart';
 import 'package:wolog_app/blocs/auth/auth_event.dart';
-import 'package:wolog_app/blocs/auth/auth_state.dart';
 import 'package:wolog_app/services/api_service.dart';
 
 class LoginForm extends StatelessWidget {

@@ -1,11 +1,13 @@
-import 'dart:collection';
+part 'user.g.dart';
 
 class User {
-  String _email;
-  Set<String> _roles;
+  int id;
+  String email;
+  String firstName;
+  String lastName;
 
-  String get email => _email;
-  UnmodifiableListView<String> get roles => UnmodifiableListView(_roles);
+  User({this.id, this.email, this.firstName, this.lastName});
 
-  User(this._email, this._roles);
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  Map<String, dynamic> toJson() => _$UserToJson(this);
 }
