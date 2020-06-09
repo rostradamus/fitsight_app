@@ -1,4 +1,4 @@
-# WOLOG APP
+# FITSIGHT APP
 
 TODO
 

@@ -1,4 +1,4 @@
-package com.example.wolog_app
+package com.rostradamus.fitsight.fitsight_app
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
