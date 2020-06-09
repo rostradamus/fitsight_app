@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:wolog_app/widgets/pages/home_page.dart';
-import 'package:wolog_app/widgets/pages/login_page.dart';
+import 'package:fitsight_app/widgets/pages/home_page.dart';
+import 'package:fitsight_app/widgets/pages/auth_page.dart';
+import 'package:fitsight_app/widgets/pages/sign_up_page.dart';
 
 import 'blocs/auth/auth_bloc.dart';
 
@@ -25,7 +26,8 @@ class MyAppState extends State<MyApp> {
               initialRoute: '/login',
               routes: {
                 '/': (context) => HomePage(),
-                '/login': (context) => LoginPage(),
+                '/login': (context) => AuthPage(),
+                '/signup': (context) => SignUpPage(),
               },
             ),
           );

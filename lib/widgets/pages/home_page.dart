@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
-import 'package:wolog_app/blocs/auth/auth_bloc.dart';
-import 'package:wolog_app/blocs/auth/auth_event.dart';
-import 'package:wolog_app/blocs/auth/auth_state.dart';
-import 'package:wolog_app/models/user.dart';
+import 'package:fitsight_app/blocs/auth/auth_bloc.dart';
+import 'package:fitsight_app/blocs/auth/auth_event.dart';
+import 'package:fitsight_app/blocs/auth/auth_state.dart';
+import 'package:fitsight_app/models/user.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -58,7 +58,7 @@ class HomePage extends StatelessWidget {
                               fontStyle: FontStyle.italic));
                     },
                     listener: (context, state) {
-                      if (state is LogoutSuccessState) {
+                      if (state is LogoutRequestState) {
                         Navigator.of(context).pushNamed('/login');
                       }
                     },

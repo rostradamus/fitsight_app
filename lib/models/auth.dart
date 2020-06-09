@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:wolog_app/models/user.dart';
+import 'package:fitsight_app/models/user.dart';
 
 part 'auth.g.dart';
 

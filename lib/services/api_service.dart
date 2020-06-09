@@ -1,11 +1,12 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:wolog_app/models/auth.dart';
-import 'package:wolog_app/services/exceptions/unsupported_os_exception.dart';
+import 'package:fitsight_app/models/auth.dart';
+import 'package:fitsight_app/services/exceptions/unsupported_os_exception.dart';
 
 class ApiService {
   final Dio _client = new Dio();
@@ -58,7 +59,18 @@ class ApiService {
     return Auth.fromJson(responseBody);
   }
 
+  Future<Auth> refreshToken() async {
+    var response = await _client.post('/auth/refresh_token');
+
+    Map responseBody = response.data;
+
+    _client.options.headers['authorization'] =
+        "${responseBody['type']} ${responseBody['token']}";
+    return Auth.fromJson(responseBody);
+  }
+
   Future<void> logout() async {
+    await _client.delete('/auth');
     _client.options.headers.remove('authorization');
   }
 }
