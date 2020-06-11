@@ -7,6 +7,7 @@ import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:fitsight_app/models/auth.dart';
 import 'package:fitsight_app/services/exceptions/unsupported_os_exception.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class ApiService {
   final Dio _client = new Dio();
@@ -36,6 +37,33 @@ class ApiService {
     _client.interceptors.add(CookieManager(
       _cookieJar,
     ));
+    _client.interceptors.add(
+      PrettyDioLogger(
+        requestHeader: true,
+        requestBody: true,
+        responseBody: true,
+        responseHeader: false,
+        error: true,
+        compact: true,
+        maxWidth: 90,
+      ),
+    );
+    _client.interceptors.add(
+      InterceptorsWrapper(
+        onError: (DioError error) async {
+          if (error.response?.statusCode == 401 &&
+              error.request?.path != "/auth/refresh_token") {
+            await refreshToken();
+
+            return _client.request(
+              error.request.path,
+              data: error.request.data,
+            );
+          }
+          return error;
+        },
+      ),
+    );
   }
 
   Dio getClient() {

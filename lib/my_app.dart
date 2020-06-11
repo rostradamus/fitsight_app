@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:fitsight_app/widgets/pages/home_page.dart';
+import 'package:fitsight_app/widgets/pages/main_page.dart';
 import 'package:fitsight_app/widgets/pages/auth_page.dart';
 import 'package:fitsight_app/widgets/pages/sign_up_page.dart';
 
@@ -25,7 +25,7 @@ class MyAppState extends State<MyApp> {
               debugShowCheckedModeBanner: false,
               initialRoute: '/login',
               routes: {
-                '/': (context) => HomePage(),
+                '/': (context) => MainPage(),
                 '/login': (context) => AuthPage(),
                 '/signup': (context) => SignUpPage(),
               },
