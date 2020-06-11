@@ -7,4 +7,7 @@ class I18n {
   static const String SIGN_UP_SUCCESS =
       "Your account has been successfully registered.";
   static const String THANK_YOU = "Thank you !";
+  static const String SESSION_EXPIRED = "Session Expired";
+  static const String SESSION_EXPIRED_CONTENT =
+      "Your session has been expired.\nPlease, sign in again";
 }

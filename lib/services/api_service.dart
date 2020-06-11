@@ -53,11 +53,21 @@ class ApiService {
         onError: (DioError error) async {
           if (error.response?.statusCode == 401 &&
               error.request?.path != "/auth/refresh_token") {
-            await refreshToken();
+            try {
+              await refreshToken();
 
-            return _client.request(
-              error.request.path,
-              data: error.request.data,
+              error.response.request.headers['authorization'] =
+                  _client.options.headers['authorization'];
+              error.response.request.headers['cookie'] =
+                  _client.options.headers['cookie'];
+            } catch (e) {
+              return e;
+            }
+
+            return await _client.request(
+              error.response.request.path,
+              data: error.response.request.data,
+              options: error.response.request,
             );
           }
           return error;
