@@ -18,8 +18,8 @@ class AuthPage extends StatelessWidget {
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is LoginSuccessState) {
-            Navigator.of(context).pop();
-            Navigator.of(context).pushReplacementNamed('/');
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
           }
           if (state is LoginFailureState) {
             var contentText = (state.statusCode == HttpStatus.unauthorized)
