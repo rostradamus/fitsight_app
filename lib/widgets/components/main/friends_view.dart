@@ -3,6 +3,7 @@ import 'package:fitsight_app/services/api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
+// TODO: (Temporary) Needs to be re-implemented
 class FriendsView extends StatefulWidget {
   @override
   _FriendsViewState createState() => _FriendsViewState();
