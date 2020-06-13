@@ -1,0 +1,40 @@
+{
+  "try_again": "다시 시도해주세요.",
+  "http": {
+    "errors": {
+      "session_expired": {
+        "title": "세션이 만료되었습니다.",
+        "content": "세션이 만료되었습니다.\n다시 로그인 해주세요."
+      },
+      "internal_server_error": {
+        "title": "이런!",
+        "content": "죄송합니다. 예상치 못한 에러가 발생했습니다."
+      }
+    }
+  },
+  "auth": {
+    "errors": {
+      "login_failed": {
+        "title": "다시 시도해주세요.",
+        "content": "이메일이나 비밀번호가 일치하지 않습니다."
+      }
+    }
+  },
+  "sign_up": {
+    "success": {
+      "title": "감사합니다!",
+      "content": "가입이 완료되었습니다."
+    },
+    "errors": {
+      "email_already_exists": {
+        "title": "다시 시도해주세요.",
+        "content": "죄송합니다. 이메일 주소가 이미 존재합니다"
+      }
+    }
+  },
+  "main": {
+    "app_bar": {
+      "greeting": "{name}님, 좋은 아침입니다!"
+    }
+  }
+}
