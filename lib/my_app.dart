@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:fitsight_app/widgets/pages/main_page.dart';
 import 'package:fitsight_app/widgets/pages/auth_page.dart';
@@ -24,6 +26,18 @@ class MyAppState extends State<MyApp> {
             child: MaterialApp(
               debugShowCheckedModeBanner: false,
               initialRoute: '/login',
+              localizationsDelegates: [
+                FlutterI18nDelegate(
+                  translationLoader:
+                      FileTranslationLoader(basePath: "assets/i18n"),
+                  missingTranslationHandler: (key, locale) {
+                    print(
+                        "--- Missing Key: $key, languageCode: ${locale.languageCode}");
+                  },
+                ),
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+              ],
               routes: {
                 '/': (context) => MainPage(),
                 '/login': (context) => AuthPage(),
