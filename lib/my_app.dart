@@ -28,8 +28,9 @@ class MyAppState extends State<MyApp> {
               initialRoute: '/login',
               localizationsDelegates: [
                 FlutterI18nDelegate(
-                  translationLoader:
-                      FileTranslationLoader(basePath: "assets/i18n"),
+                  translationLoader: FileTranslationLoader(
+                    basePath: "assets/i18n",
+                  ),
                   missingTranslationHandler: (key, locale) {
                     print(
                         "--- Missing Key: $key, languageCode: ${locale.languageCode}");

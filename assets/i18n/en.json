@@ -31,5 +31,10 @@
         "content": "We are sorry. This mail already exists in our system."
       }
     }
+  },
+  "main": {
+    "app_bar": {
+      "greeting": "Good Morning, {name}"
+    }
   }
 }

@@ -2,6 +2,7 @@ import 'package:fitsight_app/widgets/components/main/friends_view.dart';
 import 'package:fitsight_app/widgets/components/main/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:fitsight_app/blocs/auth/auth_bloc.dart';
 import 'package:fitsight_app/blocs/auth/auth_state.dart';
@@ -37,7 +38,12 @@ class _MainPageState extends State<MainPage> {
           builder: (context, state) {
             String message = 'User is Not Logged In !';
             if (state is LoginSuccessState) {
-              message = "Good Morning, ${state.auth.user.firstName} !";
+              message = FlutterI18n.translate(
+                context,
+                "main.app_bar.greeting",
+                translationParams: {"name": state.auth.user.firstName},
+              );
+              // message = "Good Morning, ${state.auth.user.firstName} !";
             }
             return Text(
               message,
