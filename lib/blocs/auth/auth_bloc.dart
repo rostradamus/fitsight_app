@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:fitsight_app/services/auth_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:fitsight_app/blocs/auth/auth_event.dart';
 import 'package:fitsight_app/blocs/auth/auth_state.dart';
-import 'package:fitsight_app/models/auth.dart';
 import 'package:fitsight_app/services/api_service.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
@@ -15,12 +15,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   @override
   Stream<AuthState> mapEventToState(AuthEvent event) async* {
     final ApiService _apiService = GetIt.I.get<ApiService>();
+    final AuthService _authService = GetIt.I.get<AuthService>();
 
     if (event is LoginPageLoadedEvent) {
       yield AuthRequestState();
       try {
-        Auth auth = await _apiService.refreshToken();
-        yield LoginSuccessState(auth: auth);
+        await _authService.refreshToken();
+        yield LoginSuccessState(auth: _authService.auth);
       } on DioError catch (e) {
         if (e.type == DioErrorType.RESPONSE &&
             e.response.statusCode == HttpStatus.unauthorized) {
@@ -35,11 +36,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     } else if (event is LoginSubmittedEvent) {
       yield AuthRequestState();
       try {
-        Auth auth = await _apiService.login(
+        await _authService.login(
           event.email,
           event.password,
         );
-        yield LoginSuccessState(auth: auth);
+        yield LoginSuccessState(auth: _authService.auth);
       } on DioError catch (e) {
         if (e.type == DioErrorType.RESPONSE) {
           yield LoginFailureState(
@@ -57,7 +58,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     } else if (event is LogoutSubmittedEvent) {
       yield LogoutRequestState();
       try {
-        await _apiService.logout();
+        await _authService.logout();
         yield LogoutSuccessState();
       } on DioError catch (e) {
         if (e.type == DioErrorType.RESPONSE) {
