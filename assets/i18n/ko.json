@@ -34,7 +34,8 @@
   },
   "main": {
     "app_bar": {
-      "greeting": "{name}님, 좋은 아침입니다!"
+      "greeting": "{name}님, 좋은 아침입니다!",
+      "not_logged_in": "로그인 되지 않았습니다."
     }
   }
 }
