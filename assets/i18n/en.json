@@ -1,0 +1,41 @@
+{
+  "try_again": "Please, try again",
+  "http": {
+    "errors": {
+      "session_expired": {
+        "title": "Session Expired",
+        "content": "Your session has been expired.\nPlease, sign in again"
+      },
+      "internal_server_error": {
+        "title": "Uh oh.",
+        "content": "We are sorry. Something unexpected happened."
+      }
+    }
+  },
+  "auth": {
+    "errors": {
+      "login_failed": {
+        "title":"Please, try again",
+        "content": "Incorrect Email or Password."
+      }
+    }
+  },
+  "sign_up": {
+    "success": {
+      "title": "Thank you!",
+      "content": "Your account has been successfully registered."
+    },
+    "errors": {
+      "email_already_exists": {
+        "title": "Please, try again",
+        "content": "We are sorry. This mail already exists in our system."
+      }
+    }
+  },
+  "main": {
+    "app_bar": {
+      "greeting": "Good Morning, {name}",
+      "not_logged_in": "User is Not Logged In"
+    }
+  }
+}

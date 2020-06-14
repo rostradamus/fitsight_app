@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:fitsight_app/models/user.dart';
 import 'package:fitsight_app/services/api_service.dart';
-import 'package:fitsight_app/utils/i18n.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:get_it/get_it.dart';
 
 // TODO: (Temporary) Needs to be re-implemented
@@ -29,8 +29,18 @@ class _FriendsViewState extends State<FriendsView> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text(I18n.SESSION_EXPIRED),
-              content: Text(I18n.SESSION_EXPIRED_CONTENT),
+              title: Text(
+                FlutterI18n.translate(
+                  context,
+                  "http.errors.session_expired.title",
+                ),
+              ),
+              content: Text(
+                FlutterI18n.translate(
+                  context,
+                  "http.errors.session_expired.content",
+                ),
+              ),
               actions: <Widget>[
                 FlatButton(
                   child: Text("Close"),
