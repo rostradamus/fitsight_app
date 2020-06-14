@@ -29,12 +29,12 @@ class ApiService {
     };
   }
 
-  Future<Dio> init() async {
+  Future<ApiService> init() async {
     Directory appDocDir = await getApplicationDocumentsDirectory();
     _cookieJar = PersistCookieJar(
       dir: appDocDir.path + "/.cookies/",
     );
-    return _client
+    _client
       ..interceptors.addAll(
         [
           CookieManager(
@@ -52,6 +52,7 @@ class ApiService {
           ApiServiceInterceptor(client: _client),
         ],
       );
+    return this;
   }
 
   Dio getClient() {
