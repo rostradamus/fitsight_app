@@ -21,6 +21,9 @@
     }
   },
   "sign_up": {
+    "app_bar": {
+      "title": "회원가입"
+    },
     "success": {
       "title": "감사합니다!",
       "content": "가입이 완료되었습니다."

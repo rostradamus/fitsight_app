@@ -6,7 +6,7 @@
         "title": "Session Expired",
         "content": "Your session has been expired.\nPlease, sign in again"
       },
-      "internal_server_error": {
+      "unexpected_error": {
         "title": "Uh oh.",
         "content": "We are sorry. Something unexpected happened."
       }
@@ -21,6 +21,9 @@
     }
   },
   "sign_up": {
+    "app_bar": {
+      "title": "Be Part of FitSight!"
+    },
     "success": {
       "title": "Thank you!",
       "content": "Your account has been successfully registered."

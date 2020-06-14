@@ -1,43 +1,43 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:meta/meta.dart';
 
 import '../auth_service.dart';
 
 class ApiServiceInterceptor extends Interceptor {
   final Dio client;
+  final AuthService _authService = GetIt.I.get<AuthService>();
 
   ApiServiceInterceptor({@required this.client});
 
-  AuthService get authService => GetIt.I.get<AuthService>();
-
   @override
   Future onRequest(RequestOptions options) async {
-    options.headers["Authorization"] =
-        GetIt.I.get<AuthService>().authorizationHeader;
+    if (_authService.hasAuth()) {
+      options.headers["Authorization"] = _authService.authorizationHeader;
+    }
     return options;
   }
 
   @override
-  Future onError(DioError err) async {
-    if (err.response?.statusCode == 401 &&
-        err.request?.path != "/auth/refresh_token") {
+  Future onError(DioError error) async {
+    if (error.response?.statusCode == 401 &&
+        _shouldRefreshToken(error.request?.path)) {
       try {
-        await authService.refreshToken();
-
-        err.response.request.headers['authorization'] =
-            authService.authorizationHeader;
-        err.response.request.headers['cookie'] =
-            this.client.options.headers['cookie'];
+        await _authService.refreshToken();
       } catch (e) {
-        return e;
+        throw e;
       }
-      return await this.client.request(
-            err.response.request.path,
-            data: err.response.request.data,
-            options: err.response.request,
+
+      RequestOptions request = error.response.request;
+      return this.client.request(
+            request.path,
+            data: request.data,
+            options: request,
           );
     }
-    return err;
+    return error;
   }
+
+  bool _shouldRefreshToken(String path) =>
+      path != null && !path.startsWith('/auth');
 }

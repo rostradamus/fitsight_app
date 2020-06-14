@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:fitsight_app/models/user.dart';
 import 'package:fitsight_app/services/api_service.dart';
+import 'package:fitsight_app/services/exceptions/auth_service_exception.dart';
+import 'package:fitsight_app/utils/global_exception_ui_handler.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:get_it/get_it.dart';
 
 // TODO: (Temporary) Needs to be re-implemented
@@ -18,44 +19,15 @@ class _FriendsViewState extends State<FriendsView> {
   void fetchUsers(BuildContext context) async {
     try {
       var response = await apiService.getClient().get('/users');
-      List<User> fetchedUsers = List<User>.from(List<Map>.from(response.data)
+      List<User> fetchedUsers = List.from(List<Map>.from(response.data)
           .map((Map model) => User.fromJson(model)));
       setState(() {
         users = fetchedUsers;
       });
-    } on DioError catch (e) {
-      if (e.response?.statusCode == 401) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text(
-                FlutterI18n.translate(
-                  context,
-                  "http.errors.session_expired.title",
-                ),
-              ),
-              content: Text(
-                FlutterI18n.translate(
-                  context,
-                  "http.errors.session_expired.content",
-                ),
-              ),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text("Close"),
-                  onPressed: () {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      '/login',
-                      (Route<dynamic> route) => false,
-                    );
-                  },
-                ),
-              ],
-            );
-          },
-        );
-      }
+    } on RefreshTokenFailedException {
+      GlobalExceptionUIHandler.showSessionExpiredDialog(context);
+    } on DioError {
+      GlobalExceptionUIHandler.showUnexpectedErrorDialog(context);
     }
   }
 
@@ -70,7 +42,8 @@ class _FriendsViewState extends State<FriendsView> {
                       leading: CircleAvatar(
                         backgroundColor: Colors.green,
                       ),
-                      title: Text(user.email),
+                      title: Text("${user.firstName} ${user.lastName}"),
+                      subtitle: Text(user.email),
                     ))
                 .toList(),
           ),

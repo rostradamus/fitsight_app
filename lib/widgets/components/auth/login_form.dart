@@ -83,7 +83,7 @@ class LoginForm extends StatelessWidget {
             child: RaisedButton(
               onPressed: () async {
                 BlocProvider.of<AuthBloc>(context).add(
-                  LoginSubmittedEvent(
+                  LoginSubmitted(
                     email: _emailController.text,
                     password: _passwordController.text,
                   ),
@@ -123,9 +123,7 @@ class LoginForm extends StatelessWidget {
           Container(
             height: 50.0,
             child: RaisedButton(
-              onPressed: () {
-                BlocProvider.of<AuthBloc>(context).add(SignUpPageOpenEvent());
-              },
+              onPressed: () => Navigator.of(context).pushNamed('/signup'),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(80.0),
               ),

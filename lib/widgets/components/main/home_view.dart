@@ -37,7 +37,9 @@ class HomeView extends StatelessWidget {
                   },
                   listener: (context, state) {
                     if (state is LogoutRequestState) {
-                      Navigator.of(context).pushNamed('/login');
+                      Navigator.of(context)
+                          .pushNamedAndRemoveUntil('/login', (r) => false);
+                      ;
                     }
                   },
                 ),
@@ -59,7 +61,7 @@ class HomeView extends StatelessWidget {
                     child: RaisedButton(
                       onPressed: () async {
                         BlocProvider.of<AuthBloc>(context)
-                            .add(LogoutSubmittedEvent());
+                            .add(LogoutSubmitted());
                       },
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(80.0),
