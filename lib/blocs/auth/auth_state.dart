@@ -37,8 +37,6 @@ class LoginFailureState extends AuthState {
   List<Object> get props => [error];
 }
 
-class LogoutRequestState extends AuthState {}
-
 class LogoutSuccessState extends AuthState {}
 
 class LogoutFailureState extends AuthState {
@@ -49,10 +47,6 @@ class LogoutFailureState extends AuthState {
   @override
   List<Object> get props => [error];
 }
-
-class SignUpWaitingState extends AuthState {}
-
-class SignUpRequestState extends AuthState {}
 
 class SignUpSuccessState extends AuthState {}
 

@@ -54,9 +54,22 @@ class _MainPageState extends State<MainPage> {
       ),
       body: SafeArea(
         top: false,
-        child: IndexedStack(
-          index: _currentIndex,
-          children: _children,
+        child: BlocConsumer<AuthBloc, AuthState>(
+          listener: (context, state) {
+            if (state is LogoutSuccessState) {
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil('/login', (r) => false);
+            }
+          },
+          builder: (context, state) {
+            if (state is AuthRequestState) {
+              return Center(child: CircularProgressIndicator());
+            }
+            return IndexedStack(
+              index: _currentIndex,
+              children: _children,
+            );
+          },
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(

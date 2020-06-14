@@ -26,11 +26,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         );
         yield LoginSuccessState(auth: _authService.auth);
       } else if (event is LogoutSubmitted) {
-        yield LogoutRequestState();
+        yield AuthRequestState();
         await _authService.logout();
         yield LogoutSuccessState();
       } else if (event is SignUpSubmitted) {
-        yield SignUpRequestState();
+        yield AuthRequestState();
         await _authService.signUp(
           email: event.email,
           password: event.password,
