@@ -23,12 +23,18 @@ class LoginSuccessState extends AuthState {
   final Auth auth;
 
   LoginSuccessState({@required this.auth});
+
+  @override
+  List<Object> get props => [auth];
 }
 
 class LoginFailureState extends AuthState {
   final AuthServiceException error;
 
   LoginFailureState({@required this.error});
+
+  @override
+  List<Object> get props => [error];
 }
 
 class LogoutRequestState extends AuthState {}
@@ -39,6 +45,9 @@ class LogoutFailureState extends AuthState {
   final AuthServiceException error;
 
   LogoutFailureState({@required this.error});
+
+  @override
+  List<Object> get props => [error];
 }
 
 class SignUpWaitingState extends AuthState {}
@@ -51,10 +60,16 @@ class SignUpFailureState extends AuthState {
   final AuthServiceException error;
 
   SignUpFailureState({@required this.error});
+
+  @override
+  List<Object> get props => [error];
 }
 
 class UnexpectedFailureState extends AuthState {
   final AuthServiceException error;
 
   UnexpectedFailureState({@required this.error});
+
+  @override
+  List<Object> get props => [error];
 }

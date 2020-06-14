@@ -39,7 +39,6 @@ class HomeView extends StatelessWidget {
                     if (state is LogoutRequestState) {
                       Navigator.of(context)
                           .pushNamedAndRemoveUntil('/login', (r) => false);
-                      ;
                     }
                   },
                 ),
