@@ -16,7 +16,7 @@ class HomeView extends StatelessWidget {
             child: Align(
               alignment: Alignment.center,
               child: Container(
-                child: BlocConsumer<AuthBloc, AuthState>(
+                child: BlocBuilder<AuthBloc, AuthState>(
                   builder: (context, state) {
                     if (state is LoginSuccessState) {
                       User user = state.auth.user;
@@ -34,11 +34,6 @@ class HomeView extends StatelessWidget {
                             fontSize: 40,
                             fontWeight: FontWeight.bold,
                             fontStyle: FontStyle.italic));
-                  },
-                  listener: (context, state) {
-                    if (state is LogoutRequestState) {
-                      Navigator.of(context).pushNamed('/login');
-                    }
                   },
                 ),
               ),
@@ -59,7 +54,7 @@ class HomeView extends StatelessWidget {
                     child: RaisedButton(
                       onPressed: () async {
                         BlocProvider.of<AuthBloc>(context)
-                            .add(LogoutSubmittedEvent());
+                            .add(LogoutSubmitted());
                       },
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(80.0),

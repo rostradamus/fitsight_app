@@ -1,5 +1,6 @@
 import 'package:fitsight_app/widgets/components/main/friends_view.dart';
 import 'package:fitsight_app/widgets/components/main/home_view.dart';
+import 'package:fitsight_app/widgets/components/shared/app_bar_gradient.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
@@ -29,11 +30,8 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GradientAppBar(
-        gradient: LinearGradient(
-          begin: Alignment.topRight,
-          end: Alignment.bottomLeft,
-          colors: [Colors.blue, Colors.red],
-        ),
+        automaticallyImplyLeading: false,
+        gradient: AppBarGradient(),
         title: BlocBuilder<AuthBloc, AuthState>(
           builder: (context, state) {
             String message = FlutterI18n.translate(
@@ -56,9 +54,22 @@ class _MainPageState extends State<MainPage> {
       ),
       body: SafeArea(
         top: false,
-        child: IndexedStack(
-          index: _currentIndex,
-          children: _children,
+        child: BlocConsumer<AuthBloc, AuthState>(
+          listener: (context, state) {
+            if (state is LogoutSuccessState) {
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil('/login', (r) => false);
+            }
+          },
+          builder: (context, state) {
+            if (state is AuthRequestState) {
+              return Center(child: CircularProgressIndicator());
+            }
+            return IndexedStack(
+              index: _currentIndex,
+              children: _children,
+            );
+          },
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(

@@ -1,97 +1,69 @@
-import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
+
 import 'package:fitsight_app/models/auth.dart';
+import 'package:fitsight_app/services/exceptions/auth_service_exception.dart';
+import 'package:meta/meta.dart';
 
-abstract class AuthState extends Equatable {}
-
-class AuthInitialState extends AuthState {
+abstract class AuthState extends Equatable {
   @override
-  List<Object> get props => null;
+  List<Object> get props => [];
 }
 
-class AuthRequestState extends AuthState {
-  @override
-  List<Object> get props => null;
-}
+class AuthInitialState extends AuthState {}
 
-class RefreshTokenSuccessState extends AuthState {
-  @override
-  List<Object> get props => null;
-}
+class AuthRequestState extends AuthState {}
 
-class RefreshTokenFailureState extends AuthState {
-  @override
-  List<Object> get props => null;
-}
+class RefreshTokenSuccessState extends AuthState {}
 
-class LoginWaitingState extends AuthState {
-  @override
-  List<Object> get props => null;
-}
+class RefreshTokenFailureState extends AuthState {}
+
+class LoginWaitingState extends AuthState {}
 
 class LoginSuccessState extends AuthState {
   final Auth auth;
 
   LoginSuccessState({@required this.auth});
+
   @override
-  List<Object> get props => null;
+  List<Object> get props => [auth];
 }
 
 class LoginFailureState extends AuthState {
-  final DioErrorType type;
-  final int statusCode;
-  final String message;
+  final AuthServiceException error;
 
-  LoginFailureState({this.type, this.statusCode, @required this.message});
+  LoginFailureState({@required this.error});
+
   @override
-  List<Object> get props => null;
+  List<Object> get props => [error];
 }
 
-class LogoutRequestState extends AuthState {
-  @override
-  List<Object> get props => null;
-}
-
-class LogoutSuccessState extends AuthState {
-  @override
-  List<Object> get props => null;
-}
+class LogoutSuccessState extends AuthState {}
 
 class LogoutFailureState extends AuthState {
-  final DioErrorType type;
-  final int statusCode;
-  final String message;
+  final AuthServiceException error;
 
-  LogoutFailureState({this.type, this.statusCode, @required this.message});
+  LogoutFailureState({@required this.error});
+
   @override
-  List<Object> get props => null;
+  List<Object> get props => [error];
 }
 
-class SignUpWaitingState extends AuthState {
-  @override
-  List<Object> get props => null;
-}
-
-class SignUpRequestState extends AuthState {
-  @override
-  List<Object> get props => null;
-}
-
-class SignUpSuccessState extends AuthState {
-  @override
-  List<Object> get props => null;
-}
+class SignUpSuccessState extends AuthState {}
 
 class SignUpFailureState extends AuthState {
-  final DioErrorType type;
-  final int statusCode;
-  final String message;
-  SignUpFailureState({
-    this.type,
-    this.statusCode,
-    @required this.message,
-  });
+  final AuthServiceException error;
+
+  SignUpFailureState({@required this.error});
+
   @override
-  List<Object> get props => null;
+  List<Object> get props => [error];
+}
+
+class UnexpectedFailureState extends AuthState {
+  final AuthServiceException error;
+
+  UnexpectedFailureState({@required this.error});
+
+  @override
+  List<Object> get props => [error];
 }

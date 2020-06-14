@@ -19,16 +19,6 @@ class SignUpForm extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Container(
-            child: Text(
-              "Be Part of FitSight !",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold),
-            ),
-          ),
-          SizedBox(height: 10),
-          Container(
             padding: EdgeInsets.all(5),
             decoration: BoxDecoration(
               color: Color.fromRGBO(255, 255, 255, 0.60),
@@ -180,7 +170,7 @@ class SignUpForm extends StatelessWidget {
             height: 50.0,
             child: RaisedButton(
               onPressed: () async => BlocProvider.of<AuthBloc>(context).add(
-                SignUpSubmittedEvent(
+                SignUpSubmitted(
                   email: _emailController.text,
                   password: _passwordController.text,
                   firstName: _firstNameController.text,
