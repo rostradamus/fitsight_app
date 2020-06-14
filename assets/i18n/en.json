@@ -34,7 +34,8 @@
   },
   "main": {
     "app_bar": {
-      "greeting": "Good Morning, {name}"
+      "greeting": "Good Morning, {name}",
+      "not_logged_in": "User is Not Logged In"
     }
   }
 }

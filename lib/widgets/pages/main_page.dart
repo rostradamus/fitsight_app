@@ -36,14 +36,16 @@ class _MainPageState extends State<MainPage> {
         ),
         title: BlocBuilder<AuthBloc, AuthState>(
           builder: (context, state) {
-            String message = 'User is Not Logged In !';
+            String message = FlutterI18n.translate(
+              context,
+              "main.app_bar.not_logged_in",
+            );
             if (state is LoginSuccessState) {
               message = FlutterI18n.translate(
                 context,
                 "main.app_bar.greeting",
                 translationParams: {"name": state.auth.user.firstName},
               );
-              // message = "Good Morning, ${state.auth.user.firstName} !";
             }
             return Text(
               message,
@@ -60,6 +62,8 @@ class _MainPageState extends State<MainPage> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
         onTap: onTapped,
         currentIndex: _currentIndex,
         type: BottomNavigationBarType.fixed,

@@ -27,6 +27,7 @@ dependencies:
   http: ^0.12.1
   get_it: ^4.0.0
   dio: ^3.0.9
+  bloc: ^4.0.0
   flutter_bloc: ^4.0.0
   equatable: ^1.2.0
   dio_cookie_manager: ^1.0.0
