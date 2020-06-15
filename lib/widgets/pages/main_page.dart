@@ -2,10 +2,11 @@ import 'package:fitsight_app/blocs/bottom_navigation/bottom_navigation_bloc.dart
 import 'package:fitsight_app/blocs/bottom_navigation/bottom_navigation_event.dart';
 import 'package:fitsight_app/blocs/bottom_navigation/bottom_navigation_state.dart';
 import 'package:fitsight_app/blocs/friends/friends_bloc.dart';
+import 'package:fitsight_app/blocs/plans/plans_bloc.dart';
 import 'package:fitsight_app/widgets/components/main/custom_bottom_navigation_bar.dart';
 import 'package:fitsight_app/widgets/components/main/friends_view.dart';
 import 'package:fitsight_app/widgets/components/main/home_view.dart';
-import 'package:fitsight_app/widgets/components/main/plan_view.dart';
+import 'package:fitsight_app/widgets/components/main/plans_view.dart';
 import 'package:fitsight_app/widgets/components/main/settings_view.dart';
 import 'package:fitsight_app/widgets/components/main/tips_view.dart';
 import 'package:fitsight_app/widgets/components/shared/app_bar_gradient.dart';
@@ -68,7 +69,11 @@ class MainPage extends StatelessWidget {
                     create: (context) => FriendsBloc(),
                     child: FriendsView(),
                   );
-                if (state is PlanViewState) return PlanView();
+                if (state is PlanViewState)
+                  return BlocProvider<PlansBloc>(
+                    create: (context) => PlansBloc(),
+                    child: PlansView(),
+                  );
                 if (state is TipsViewState) return TipsView();
                 if (state is SettingsViewState) return SettingsView();
                 return Container();

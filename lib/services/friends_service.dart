@@ -3,6 +3,7 @@ import 'package:fitsight_app/models/user.dart';
 import 'package:get_it/get_it.dart';
 
 import 'api_service.dart';
+import 'exceptions/common_http_exception.dart';
 
 class FriendsService {
   ApiService get _apiService => GetIt.I.get<ApiService>();
@@ -18,7 +19,5 @@ class FriendsService {
     }
   }
 }
-
-class FetchFailedException extends DioError {}
 
 class UnexpectedFriendsException extends DioError {}
