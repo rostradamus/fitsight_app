@@ -2,6 +2,7 @@ import 'package:fitsight_app/blocs/bottom_navigation/bottom_navigation_bloc.dart
 import 'package:fitsight_app/blocs/bottom_navigation/bottom_navigation_event.dart';
 import 'package:fitsight_app/blocs/bottom_navigation/bottom_navigation_state.dart';
 import 'package:fitsight_app/blocs/friends/friends_bloc.dart';
+import 'package:fitsight_app/widgets/components/main/custome_bottom_navigation_bar.dart';
 import 'package:fitsight_app/widgets/components/main/friends_view.dart';
 import 'package:fitsight_app/widgets/components/main/home_view.dart';
 import 'package:fitsight_app/widgets/components/main/plan_view.dart';
@@ -78,38 +79,7 @@ class MainPage extends StatelessWidget {
       ),
       bottomNavigationBar:
           BlocBuilder<BottomNavigationBloc, BottomNavigationState>(
-        builder: (context, state) => BottomNavigationBar(
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          onTap: (index) => BlocProvider.of<BottomNavigationBloc>(context)
-              .add(PageTapped(index: index)),
-          currentIndex:
-              BlocProvider.of<BottomNavigationBloc>(context).currentIndex,
-          type: BottomNavigationBarType.fixed,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              title: Text("Home"),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              title: Text("Friends"),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_today),
-              title: Text("Me"),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.directions_bike),
-              title: Text("Plan"),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.settings),
-              title: Text("Settings"),
-            ),
-          ],
-        ),
-      ),
+              builder: (context, state) => CustomBottomNavigationBar()),
     );
   }
 }

@@ -19,10 +19,16 @@ class FriendsView extends StatelessWidget {
                   children: state.friends
                       .map(
                         (User user) => ListTile(
+                          onTap: () {
+                            print("Pressed: ${user.email}");
+                          },
+                          onLongPress: () {
+                            print("Pressed: ${user.fullName}");
+                          },
                           leading: CircleAvatar(
                             backgroundColor: Colors.green,
                           ),
-                          title: Text("${user.firstName} ${user.lastName}"),
+                          title: Text(user.fullName),
                           subtitle: Text(user.email),
                         ),
                       )

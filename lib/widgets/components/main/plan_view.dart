@@ -109,19 +109,14 @@ class _PlanViewState extends State<PlanView> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Temp"),
-      ),
-      body: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          // Switch out 2 lines below to play with TableCalendar's settings
-          //-----------------------
-          _buildTableCalendar(),
-          Expanded(child: _buildEventList()),
-        ],
-      ),
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      children: <Widget>[
+        // Switch out 2 lines below to play with TableCalendar's settings
+        //-----------------------
+        _buildTableCalendar(),
+        Expanded(child: _buildEventList()),
+      ],
     );
   }
 
