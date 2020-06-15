@@ -2,7 +2,7 @@ import 'package:fitsight_app/blocs/bottom_navigation/bottom_navigation_bloc.dart
 import 'package:fitsight_app/blocs/bottom_navigation/bottom_navigation_event.dart';
 import 'package:fitsight_app/blocs/bottom_navigation/bottom_navigation_state.dart';
 import 'package:fitsight_app/blocs/friends/friends_bloc.dart';
-import 'package:fitsight_app/widgets/components/main/custome_bottom_navigation_bar.dart';
+import 'package:fitsight_app/widgets/components/main/custom_bottom_navigation_bar.dart';
 import 'package:fitsight_app/widgets/components/main/friends_view.dart';
 import 'package:fitsight_app/widgets/components/main/home_view.dart';
 import 'package:fitsight_app/widgets/components/main/plan_view.dart';
