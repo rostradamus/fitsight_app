@@ -1,5 +1,12 @@
+import 'package:fitsight_app/blocs/bottom_navigation/bottom_navigation_bloc.dart';
+import 'package:fitsight_app/blocs/bottom_navigation/bottom_navigation_event.dart';
+import 'package:fitsight_app/blocs/bottom_navigation/bottom_navigation_state.dart';
+import 'package:fitsight_app/blocs/friends/friends_bloc.dart';
 import 'package:fitsight_app/widgets/components/main/friends_view.dart';
 import 'package:fitsight_app/widgets/components/main/home_view.dart';
+import 'package:fitsight_app/widgets/components/main/plan_view.dart';
+import 'package:fitsight_app/widgets/components/main/settings_view.dart';
+import 'package:fitsight_app/widgets/components/main/tips_view.dart';
 import 'package:fitsight_app/widgets/components/shared/app_bar_gradient.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,26 +15,10 @@ import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:fitsight_app/blocs/auth/auth_bloc.dart';
 import 'package:fitsight_app/blocs/auth/auth_state.dart';
 
-class MainPage extends StatefulWidget {
-  @override
-  _MainPageState createState() => _MainPageState();
-}
-
-class _MainPageState extends State<MainPage> {
-  int _currentIndex = 0;
-  final List<Widget> _children = [
-    HomeView(),
-    FriendsView(),
-  ];
-
-  void onTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-  }
-
+class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<BottomNavigationBloc>(context).add(MainPageLoaded());
     return Scaffold(
       appBar: GradientAppBar(
         automaticallyImplyLeading: false,
@@ -65,41 +56,59 @@ class _MainPageState extends State<MainPage> {
             if (state is AuthRequestState) {
               return Center(child: CircularProgressIndicator());
             }
-            return IndexedStack(
-              index: _currentIndex,
-              children: _children,
+            return BlocBuilder<BottomNavigationBloc, BottomNavigationState>(
+              builder: (context, state) {
+                if (state is ViewLoading) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                if (state is HomeViewState) return HomeView();
+                if (state is FriendsViewState)
+                  return BlocProvider<FriendsBloc>(
+                    create: (context) => FriendsBloc(),
+                    child: FriendsView(),
+                  );
+                if (state is PlanViewState) return PlanView();
+                if (state is TipsViewState) return TipsView();
+                if (state is SettingsViewState) return SettingsView();
+                return Container();
+              },
             );
           },
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        onTap: onTapped,
-        currentIndex: _currentIndex,
-        type: BottomNavigationBarType.fixed,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text("Home"),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            title: Text("Friends"),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            title: Text("Me"),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.directions_bike),
-            title: Text("Plan"),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            title: Text("Settings"),
-          ),
-        ],
+      bottomNavigationBar:
+          BlocBuilder<BottomNavigationBloc, BottomNavigationState>(
+        builder: (context, state) => BottomNavigationBar(
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          onTap: (index) => BlocProvider.of<BottomNavigationBloc>(context)
+              .add(PageTapped(index: index)),
+          currentIndex:
+              BlocProvider.of<BottomNavigationBloc>(context).currentIndex,
+          type: BottomNavigationBarType.fixed,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              title: Text("Home"),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              title: Text("Friends"),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.calendar_today),
+              title: Text("Me"),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.directions_bike),
+              title: Text("Plan"),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.settings),
+              title: Text("Settings"),
+            ),
+          ],
+        ),
       ),
     );
   }

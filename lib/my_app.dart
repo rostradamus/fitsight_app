@@ -1,3 +1,4 @@
+import 'package:fitsight_app/blocs/bottom_navigation/bottom_navigation_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
@@ -21,8 +22,15 @@ class MyAppState extends State<MyApp> {
       future: GetIt.I.allReady(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
-          return BlocProvider<AuthBloc>(
-            create: (context) => AuthBloc(),
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider<AuthBloc>(
+                create: (BuildContext context) => AuthBloc(),
+              ),
+              BlocProvider<BottomNavigationBloc>(
+                create: (BuildContext context) => BottomNavigationBloc(),
+              ),
+            ],
             child: MaterialApp(
               debugShowCheckedModeBanner: false,
               initialRoute: '/login',
