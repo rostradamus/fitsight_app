@@ -1,51 +1,46 @@
-import 'package:dio/dio.dart';
+import 'package:fitsight_app/blocs/friends/friends_bloc.dart';
+import 'package:fitsight_app/blocs/friends/friends_event.dart';
+import 'package:fitsight_app/blocs/friends/friends_state.dart';
 import 'package:fitsight_app/models/user.dart';
-import 'package:fitsight_app/services/api_service.dart';
-import 'package:fitsight_app/services/exceptions/auth_service_exception.dart';
-import 'package:fitsight_app/utils/global_exception_ui_handler.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-// TODO: (Temporary) Needs to be re-implemented
-class FriendsView extends StatefulWidget {
-  @override
-  _FriendsViewState createState() => _FriendsViewState();
-}
-
-class _FriendsViewState extends State<FriendsView> {
-  ApiService apiService = GetIt.I.get<ApiService>();
-  List<User> users = [];
-
-  void fetchUsers(BuildContext context) async {
-    try {
-      var response = await apiService.getClient().get('/users');
-      List<User> fetchedUsers = List.from(List<Map>.from(response.data)
-          .map((Map model) => User.fromJson(model)));
-      setState(() {
-        users = fetchedUsers;
-      });
-    } on RefreshTokenFailedException {
-      GlobalExceptionUIHandler.showSessionExpiredDialog(context);
-    } on DioError {
-      GlobalExceptionUIHandler.showUnexpectedErrorDialog(context);
-    }
-  }
-
+class FriendsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<FriendsBloc>(context).add(FriendsViewLoaded());
     return Container(
       child: Stack(
         children: <Widget>[
-          ListView(
-            children: users
-                .map((User user) => ListTile(
-                      leading: CircleAvatar(
-                        backgroundColor: Colors.green,
-                      ),
-                      title: Text("${user.firstName} ${user.lastName}"),
-                      subtitle: Text(user.email),
-                    ))
-                .toList(),
+          BlocBuilder<FriendsBloc, FriendsState>(
+            builder: (context, state) {
+              if (state is FriendsLoadedState) {
+                return ListView(
+                  children: state.friends
+                      .map(
+                        (User user) => ListTile(
+                          onTap: () {
+                            print("Pressed: ${user.email}");
+                          },
+                          onLongPress: () {
+                            print("Pressed: ${user.fullName}");
+                          },
+                          leading: CircleAvatar(
+                            backgroundColor: Colors.green,
+                          ),
+                          title: Text(user.fullName),
+                          subtitle: Text(user.email),
+                        ),
+                      )
+                      .toList(),
+                );
+              }
+              return Center(
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.white,
+                ),
+              );
+            },
           ),
           Padding(
             padding: EdgeInsets.all(30.0),
@@ -60,7 +55,8 @@ class _FriendsViewState extends State<FriendsView> {
                     height: 50,
                     width: 70,
                     child: RaisedButton(
-                      onPressed: () => fetchUsers(context),
+                      onPressed: () => BlocProvider.of<FriendsBloc>(context)
+                          .add(FriendsListRefreshed()),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(80.0),
                       ),

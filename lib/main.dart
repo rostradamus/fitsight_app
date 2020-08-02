@@ -5,5 +5,6 @@ import 'my_app.dart';
 
 void main() {
   setupLocator();
+
   runApp(MyApp());
 }

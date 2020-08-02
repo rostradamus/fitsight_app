@@ -6,6 +6,8 @@ class User {
   String firstName;
   String lastName;
 
+  String get fullName => "$firstName $lastName";
+
   User({this.id, this.email, this.firstName, this.lastName});
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
