@@ -39,57 +39,6 @@ class HomeView extends StatelessWidget {
               ),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.all(30.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Container(
-                    height: 50,
-                    width: 70,
-                    child: RaisedButton(
-                      onPressed: () async {
-                        BlocProvider.of<AuthBloc>(context)
-                            .add(LogoutSubmitted());
-                      },
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(80.0),
-                      ),
-                      padding: EdgeInsets.all(0.0),
-                      child: Ink(
-                        decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: <Color>[
-                                Color(0xFFDAE2F8),
-                                Color(0xFFD6A4A4)
-                              ],
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight,
-                            ),
-                            borderRadius: BorderRadius.circular(30.0)),
-                        child: Container(
-                          constraints: BoxConstraints(
-                            maxWidth: 300.0,
-                            minHeight: 50.0,
-                          ),
-                          alignment: Alignment.center,
-                          child: Text(
-                            "Logout",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
         ],
       ),
     );
